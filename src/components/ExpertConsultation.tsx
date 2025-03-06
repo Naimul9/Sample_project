@@ -71,11 +71,11 @@ const ExpertConsultation = ({
     herbalists.find((h) => h.id === selectedHerbalist) || herbalists[0];
 
   return (
-    <section className="w-full py-16 px-4 md:px-6 bg-green-50">
+    <section className="w-full py-16 px-4 md:px-6 bg-green-50 dark:bg-green-950/30">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <motion.h2
-            className="text-3xl md:text-4xl font-bold text-green-800 mb-4"
+            className="text-3xl md:text-4xl font-bold text-green-800 dark:text-green-500 mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -83,7 +83,7 @@ const ExpertConsultation = ({
             {title}
           </motion.h2>
           <motion.p
-            className="text-gray-600 max-w-3xl mx-auto"
+            className="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -99,7 +99,7 @@ const ExpertConsultation = ({
           className="w-full"
         >
           <div className="flex justify-center mb-8">
-            <TabsList className="bg-green-100">
+            <TabsList className="bg-green-100 dark:bg-green-900/50">
               <TabsTrigger
                 value="herbalists"
                 className="data-[state=active]:bg-green-600 data-[state=active]:text-white"

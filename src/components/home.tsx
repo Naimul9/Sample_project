@@ -31,7 +31,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900">
       <Header
         cartItemCount={cartItems.length}
         onCartClick={handleCartClick}
@@ -43,10 +43,10 @@ const Home = () => {
 
         <section id="product-section" className="py-12">
           <div className="max-w-7xl mx-auto px-4 md:px-6 mb-8">
-            <h2 className="text-3xl font-bold text-green-800 mb-2">
+            <h2 className="text-3xl font-bold text-green-800 dark:text-green-500 mb-2">
               Our Herbal Remedies
             </h2>
-            <p className="text-gray-600 max-w-3xl">
+            <p className="text-gray-600 dark:text-gray-300 max-w-3xl">
               Discover our carefully selected natural remedies for heart and
               kidney health, backed by traditional wisdom and modern research.
             </p>

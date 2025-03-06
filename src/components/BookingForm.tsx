@@ -83,11 +83,11 @@ const BookingForm = ({
   };
 
   return (
-    <div className="w-full max-w-md p-6 rounded-lg shadow-md bg-white border border-gray-200">
-      <h2 className="text-2xl font-semibold text-green-800 mb-4">
+    <div className="w-full max-w-md p-6 rounded-lg shadow-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+      <h2 className="text-2xl font-semibold text-green-800 dark:text-green-500 mb-4">
         Book a Consultation
       </h2>
-      <p className="text-gray-600 mb-6">
+      <p className="text-gray-600 dark:text-gray-300 mb-6">
         Schedule a virtual appointment with {herbalistName} to discuss your
         health needs.
       </p>
@@ -99,9 +99,13 @@ const BookingForm = ({
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Full Name</FormLabel>
+                <FormLabel className="dark:text-gray-300">Full Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="John Doe" {...field} />
+                  <Input
+                    placeholder="John Doe"
+                    {...field}
+                    className="dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -113,12 +117,13 @@ const BookingForm = ({
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="dark:text-gray-300">Email</FormLabel>
                 <FormControl>
                   <Input
                     type="email"
                     placeholder="you@example.com"
                     {...field}
+                    className="dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   />
                 </FormControl>
                 <FormMessage />
@@ -131,9 +136,15 @@ const BookingForm = ({
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone Number</FormLabel>
+                <FormLabel className="dark:text-gray-300">
+                  Phone Number
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="(123) 456-7890" {...field} />
+                  <Input
+                    placeholder="(123) 456-7890"
+                    {...field}
+                    className="dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -145,14 +156,14 @@ const BookingForm = ({
             name="date"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Date</FormLabel>
+                <FormLabel className="dark:text-gray-300">Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
                         variant={"outline"}
                         className={
-                          "w-full pl-3 text-left font-normal flex justify-between items-center"
+                          "w-full pl-3 text-left font-normal flex justify-between items-center dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                         }
                       >
                         {field.value ? (
@@ -164,7 +175,10 @@ const BookingForm = ({
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
+                  <PopoverContent
+                    className="w-auto p-0 dark:bg-gray-800 dark:border-gray-700"
+                    align="start"
+                  >
                     <Calendar
                       mode="single"
                       selected={field.value}
@@ -177,6 +191,7 @@ const BookingForm = ({
                           )
                       }
                       initialFocus
+                      className="dark:bg-gray-800 dark:text-white"
                     />
                   </PopoverContent>
                 </Popover>
@@ -190,19 +205,23 @@ const BookingForm = ({
             name="time"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Time</FormLabel>
+                <FormLabel className="dark:text-gray-300">Time</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                       <SelectValue placeholder="Select a time slot" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="dark:bg-gray-800 dark:border-gray-700">
                     {timeSlots.map((time) => (
-                      <SelectItem key={time} value={time}>
+                      <SelectItem
+                        key={time}
+                        value={time}
+                        className="dark:text-white"
+                      >
                         {time}
                       </SelectItem>
                     ))}
@@ -218,11 +237,13 @@ const BookingForm = ({
             name="reason"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Reason for Consultation</FormLabel>
+                <FormLabel className="dark:text-gray-300">
+                  Reason for Consultation
+                </FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Please briefly describe your health concerns or questions..."
-                    className="min-h-[100px]"
+                    className="min-h-[100px] dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     {...field}
                   />
                 </FormControl>
@@ -233,7 +254,7 @@ const BookingForm = ({
 
           <Button
             type="submit"
-            className="w-full bg-green-700 hover:bg-green-800 text-white"
+            className="w-full bg-green-700 hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700 text-white"
           >
             Book Appointment
           </Button>

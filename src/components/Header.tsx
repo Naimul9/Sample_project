@@ -3,6 +3,9 @@ import { Search, ShoppingCart, Menu, X, User } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
+import ThemeToggle from "./ThemeToggle";
+import LanguageSelector from "./LanguageSelector";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface HeaderProps {
   logo?: string;
@@ -27,6 +30,7 @@ const Header = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showSearchOnMobile, setShowSearchOnMobile] = useState(false);
+  const { t } = useLanguage();
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,23 +45,31 @@ const Header = ({
     setShowSearchOnMobile(!showSearchOnMobile);
   };
 
+  // Translate navigation links
+  const translatedLinks = navigationLinks.map((link) => ({
+    ...link,
+    label: t(link.label.toLowerCase()),
+  }));
+
   return (
-    <header className="w-full h-20 bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <header className="w-full h-20 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
           <a href="/" className="flex items-center">
-            <span className="text-xl font-bold text-green-700">{logo}</span>
+            <span className="text-xl font-bold text-green-700 dark:text-green-500">
+              {t("logo")}
+            </span>
           </a>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          {navigationLinks.map((link) => (
+          {translatedLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-gray-600 hover:text-green-700 font-medium transition-colors"
+              className="text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-500 font-medium transition-colors"
             >
               {link.label}
             </a>
@@ -69,28 +81,31 @@ const Header = ({
           <form onSubmit={handleSearchSubmit} className="w-full relative">
             <Input
               type="text"
-              placeholder="Search for herbs or conditions..."
+              placeholder={t("search_placeholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pr-10 border-green-200 focus:border-green-500 focus:ring-green-500"
+              className="w-full pr-10 border-green-200 dark:border-gray-700 focus:border-green-500 focus:ring-green-500 dark:bg-gray-800 dark:text-white"
             />
             <Button
               type="submit"
               variant="ghost"
               size="icon"
-              className="absolute right-0 top-0 text-gray-500 hover:text-green-700"
+              className="absolute right-0 top-0 text-gray-500 dark:text-gray-400 hover:text-green-700 dark:hover:text-green-500"
             >
               <Search className="h-5 w-5" />
             </Button>
           </form>
         </div>
 
-        {/* Cart and Mobile Menu Buttons */}
-        <div className="flex items-center space-x-4">
+        {/* Cart, Theme, Language and Mobile Menu Buttons */}
+        <div className="flex items-center space-x-2">
+          <ThemeToggle />
+          <LanguageSelector />
+
           <Button
             variant="ghost"
             size="icon"
-            className="relative text-gray-600 hover:text-green-700 md:flex hidden"
+            className="relative text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-500 md:flex hidden"
             onClick={onCartClick}
           >
             <ShoppingCart className="h-6 w-6" />
@@ -104,7 +119,7 @@ const Header = ({
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden text-gray-600 hover:text-green-700"
+            className="md:hidden text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-500"
             onClick={toggleMobileSearch}
           >
             <Search className="h-6 w-6" />
@@ -113,7 +128,7 @@ const Header = ({
           <Button
             variant="ghost"
             size="icon"
-            className="relative text-gray-600 hover:text-green-700 md:hidden"
+            className="relative text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-500 md:hidden"
             onClick={onCartClick}
           >
             <ShoppingCart className="h-6 w-6" />
@@ -127,7 +142,7 @@ const Header = ({
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden text-gray-600 hover:text-green-700"
+            className="md:hidden text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-500"
             onClick={toggleMenu}
           >
             {isMenuOpen ? (
@@ -142,23 +157,23 @@ const Header = ({
       {/* Mobile Search Bar */}
       <div
         className={cn(
-          "md:hidden bg-white w-full px-4 py-3 border-b border-gray-200 transition-all duration-300",
+          "md:hidden bg-white dark:bg-gray-900 w-full px-4 py-3 border-b border-gray-200 dark:border-gray-800 transition-all duration-300",
           showSearchOnMobile ? "block" : "hidden",
         )}
       >
         <form onSubmit={handleSearchSubmit} className="w-full relative">
           <Input
             type="text"
-            placeholder="Search for herbs or conditions..."
+            placeholder={t("search_placeholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pr-10 border-green-200 focus:border-green-500 focus:ring-green-500"
+            className="w-full pr-10 border-green-200 dark:border-gray-700 focus:border-green-500 focus:ring-green-500 dark:bg-gray-800 dark:text-white"
           />
           <Button
             type="submit"
             variant="ghost"
             size="icon"
-            className="absolute right-0 top-0 text-gray-500 hover:text-green-700"
+            className="absolute right-0 top-0 text-gray-500 dark:text-gray-400 hover:text-green-700 dark:hover:text-green-500"
           >
             <Search className="h-5 w-5" />
           </Button>
@@ -168,16 +183,16 @@ const Header = ({
       {/* Mobile Navigation Menu */}
       <div
         className={cn(
-          "md:hidden bg-white w-full absolute left-0 border-b border-gray-200 shadow-lg transition-all duration-300 z-40",
+          "md:hidden bg-white dark:bg-gray-900 w-full absolute left-0 border-b border-gray-200 dark:border-gray-800 shadow-lg transition-all duration-300 z-40",
           isMenuOpen ? "block" : "hidden",
         )}
       >
         <nav className="flex flex-col p-4 space-y-4">
-          {navigationLinks.map((link) => (
+          {translatedLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-gray-600 hover:text-green-700 font-medium py-2 transition-colors"
+              className="text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-500 font-medium py-2 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               {link.label}
@@ -185,12 +200,16 @@ const Header = ({
           ))}
           <a
             href="/account"
-            className="flex items-center text-gray-600 hover:text-green-700 font-medium py-2 transition-colors"
+            className="flex items-center text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-500 font-medium py-2 transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
             <User className="h-5 w-5 mr-2" />
-            My Account
+            {t("my_account")}
           </a>
+          <div className="flex items-center space-x-4 pt-2">
+            <ThemeToggle />
+            <LanguageSelector />
+          </div>
         </nav>
       </div>
     </header>

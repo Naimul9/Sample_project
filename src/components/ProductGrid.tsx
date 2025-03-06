@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CategoryFilter from "./CategoryFilter";
 import ProductCard from "./ProductCard";
 import { Loader2 } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface Product {
   id: string;
@@ -51,7 +52,7 @@ const ProductGrid = ({
       id: "3",
       name: "Ashwagandha Root Powder",
       image:
-        "https://images.unsplash.com/photo-1611071535774-802c8c4a1d6e?w=400&q=80",
+        "https://images.unsplash.com/photo-1567593810070-7a3d471af022?w=400&q=80",
       description:
         "Adaptogenic herb that helps the body manage stress and supports overall wellness.",
       price: 22.5,
@@ -75,7 +76,7 @@ const ProductGrid = ({
       id: "5",
       name: "Milk Thistle Extract",
       image:
-        "https://images.unsplash.com/photo-1567185803695-d2e0b35f0b5a?w=400&q=80",
+        "https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=400&q=80",
       description:
         "Supports liver and kidney health with powerful antioxidant properties.",
       price: 27.99,
@@ -100,22 +101,49 @@ const ProductGrid = ({
   error = "",
   onAddToCart = () => {},
 }: ProductGridProps) => {
+  const { t } = useLanguage();
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedSort, setSelectedSort] = useState("Newest");
 
+  // Map translated sort options to original sort options for internal logic
+  const sortOptionMap = {
+    [t("newest")]: "Newest",
+    [t("price_low_high")]: "Price: Low to High",
+    [t("price_high_low")]: "Price: High to Low",
+    [t("most_popular")]: "Most Popular",
+  };
+
+  // Map translated categories to original categories for internal logic
+  const categoryMap = {
+    [t("all")]: "All",
+    [t("heart_remedies")]: "Heart Remedies",
+    [t("kidney_remedies")]: "Kidney Remedies",
+    [t("general_wellness")]: "General Wellness",
+  };
+
   useEffect(() => {
     let result = [...products];
 
-    // Apply category filter
-    if (selectedCategory !== "All") {
+    // Apply category filter - use the original category name for filtering
+    const originalCategory =
+      Object.entries(categoryMap).find(
+        ([translated]) => translated === selectedCategory,
+      )?.[1] || selectedCategory;
+
+    if (originalCategory !== "All") {
       result = result.filter(
-        (product) => product.category === selectedCategory,
+        (product) => product.category === originalCategory,
       );
     }
 
-    // Apply sorting
-    switch (selectedSort) {
+    // Apply sorting - use the original sort option for sorting logic
+    const originalSort =
+      Object.entries(sortOptionMap).find(
+        ([translated]) => translated === selectedSort,
+      )?.[1] || selectedSort;
+
+    switch (originalSort) {
       case "Price: Low to High":
         result.sort((a, b) => a.price - b.price);
         break;
@@ -133,7 +161,7 @@ const ProductGrid = ({
     }
 
     setFilteredProducts(result);
-  }, [products, selectedCategory, selectedSort]);
+  }, [products, selectedCategory, selectedSort, t]);
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
@@ -149,23 +177,25 @@ const ProductGrid = ({
 
   if (isLoading) {
     return (
-      <div className="w-full h-[400px] flex items-center justify-center bg-white">
-        <Loader2 className="h-12 w-12 text-green-600 animate-spin" />
-        <span className="ml-2 text-lg text-gray-600">Loading products...</span>
+      <div className="w-full h-[400px] flex items-center justify-center bg-white dark:bg-gray-900">
+        <Loader2 className="h-12 w-12 text-green-600 dark:text-green-500 animate-spin" />
+        <span className="ml-2 text-lg text-gray-600 dark:text-gray-300">
+          Loading products...
+        </span>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="w-full p-8 text-center bg-white">
-        <p className="text-red-500">{error}</p>
+      <div className="w-full p-8 text-center bg-white dark:bg-gray-900">
+        <p className="text-red-500 dark:text-red-400">{error}</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full bg-gray-50">
+    <div className="w-full bg-gray-50 dark:bg-gray-800">
       <CategoryFilter
         selectedCategory={selectedCategory}
         onCategoryChange={handleCategoryChange}
@@ -174,10 +204,8 @@ const ProductGrid = ({
       />
 
       {filteredProducts.length === 0 ? (
-        <div className="w-full py-16 text-center bg-white">
-          <p className="text-gray-500">
-            No products found matching your criteria.
-          </p>
+        <div className="w-full py-16 text-center bg-white dark:bg-gray-900">
+          <p className="text-gray-500 dark:text-gray-400">{t("no_products")}</p>
         </div>
       ) : (
         <div className="max-w-7xl mx-auto py-8 px-4 md:px-6">
