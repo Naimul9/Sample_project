@@ -4,6 +4,8 @@ import Home from "./components/home";
 import Shop from "./components/Shop";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import Cart from "./components/Cart";
+import Checkout from "./components/Checkout";
 import routes from "tempo-routes";
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
           {import.meta.env.VITE_TEMPO === "true" && (
             <Route path="/tempobook/*" />
           )}

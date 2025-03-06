@@ -77,6 +77,17 @@ const ProductCard = ({
 
   const handleAddToCart = () => {
     onAddToCart(id);
+    // Show a small notification that item was added
+    const notification = document.createElement("div");
+    notification.className =
+      "fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-md shadow-lg z-50";
+    notification.textContent = `${name} added to cart`;
+    document.body.appendChild(notification);
+
+    // Remove notification after 3 seconds
+    setTimeout(() => {
+      notification.remove();
+    }, 3000);
   };
 
   // Translate category if it matches one of our known categories

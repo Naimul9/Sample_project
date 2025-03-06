@@ -106,7 +106,7 @@ const Header = ({
             variant="ghost"
             size="icon"
             className="relative text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-500 md:flex hidden"
-            onClick={onCartClick}
+            onClick={() => (window.location.href = "/cart")}
           >
             <ShoppingCart className="h-6 w-6" />
             {cartItemCount > 0 && (
@@ -129,7 +129,7 @@ const Header = ({
             variant="ghost"
             size="icon"
             className="relative text-gray-600 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-500 md:hidden"
-            onClick={onCartClick}
+            onClick={() => (window.location.href = "/cart")}
           >
             <ShoppingCart className="h-6 w-6" />
             {cartItemCount > 0 && (
