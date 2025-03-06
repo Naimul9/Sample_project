@@ -13,7 +13,7 @@ interface HeroSectionProps {
 const HeroSection = ({
   title,
   subtitle,
-  backgroundImage = "https://images.unsplash.com/photo-1546074177-31bfa593f731?w=1200&q=80",
+  backgroundImage = "https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=1200&q=80",
   buttonText,
   onButtonClick = () => console.log("Shop now clicked"),
 }: HeroSectionProps) => {
@@ -31,9 +31,9 @@ const HeroSection = ({
         <img
           src={backgroundImage}
           alt="Natural herbs background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-green-900/70 to-transparent dark:from-green-950/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-green-900/80 to-transparent dark:from-green-950/90" />
       </div>
 
       {/* Content */}
